@@ -3,7 +3,9 @@ Collection of Python files used to scrape data on colleges using the Chronicle o
 
 ## Files
 deep_clean_list.py: cleaning of the Chronicle's database
+
 scraping_for_college_info.py: for a given school, scraping the National Center for Education Statistics for informaiton
+
 big_college_data.py: main program, reading from and writing to csvs while using the above two programs
 
 
