@@ -1,4 +1,3 @@
-#cleaning from the Chronicle list
 """
 author: Jake Gaughan
 
@@ -16,6 +15,9 @@ I don't really feel like thoroughly commenting all of this one so I'll give a br
     - Others follow a more uniform way of writing and those are grouped together too
     - Some others already have their names written in full, those are kept intact
 - This file will grow as more failures and errors are found and optimized
+
+As it stands, ~500 of the 620 entries in the Chronicle database were able to be searched, looking forward to improving that throughout Summer 2020
+
 """
 
 def deep_clean(clean_college_names):

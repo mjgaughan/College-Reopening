@@ -58,6 +58,7 @@ def writing_into_csv(clean_college_names):
         #for each college, lookup data for it and write it into the csv
         for college in clean_college_names[164:]:
             holding = lookup(college)
+            #if there is a response from the query
             if holding != None:
                 writer.writerow(holding)
                 trouble_shooting_makes += 1
@@ -73,7 +74,9 @@ def writing_into_csv(clean_college_names):
         print("----------------------------------------------")
 
 if __name__ == "__main__":
+    #grabbing names
     institution_names()
+    #cleaning them
     clean_college_names = deep_clean(dirty_college_names)
-
+    #searching them
     writing_into_csv(clean_college_names)

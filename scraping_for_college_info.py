@@ -11,7 +11,6 @@ The information grabbed is:
 - 25/75 percintiles of ACT scores
 
 I used Mechanize and BeautifulSoup4 for this. And had the program return a list of informaiton on the school.
-
 """
 import mechanize, bs4
 
@@ -115,7 +114,7 @@ def  lookup(college):
     return(college_stats)
 
 
-#looking through image descriptions for more data
+#looking through image descriptions for more data (specifically for the ACT data)
 def clean_td(tds, college_stats):
     td_data = []
     holding_string =""
@@ -139,4 +138,3 @@ def clean_td(tds, college_stats):
             holding_string = ""
         elif save_y_n:
             holding_string += i
-    #print(td_data)
