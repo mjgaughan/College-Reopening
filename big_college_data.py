@@ -21,7 +21,7 @@ clean_college_names = []
 def institution_names():
     global college_names
     #opening up the csv from the Chronicle
-    with open('Chronicle_2.csv') as csv_file:
+    with open('Chronicle_3.csv') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
         for row in csv_reader:
@@ -34,12 +34,14 @@ def institution_names():
                     #state
                     state = row[2]
                     #grabbing the plans
+                    """
                     if row[-1] != "":
                         plans = row[-1]
                     elif row[4] != "":
                         plans = row[4]
                     else:
-                        plans = row[3]
+                    """
+                    plans = row[3]
                     #putting all of the info from the Chronicle into a packet
                     college_admissions_packet = [college_name, private_public, state, plans]
                     #add to the list of all colleges
@@ -51,12 +53,12 @@ def writing_into_csv(clean_college_names):
     trouble_shooting_misses = 0
     trouble_shooting_makes = 0
     #opening the csv
-    with open('clean_info.csv' , 'w' , newline = '') as file:
+    with open('new_queries.csv' , 'w' , newline = '') as file:
         writer = csv.writer(file)
         #top row
         writer.writerow(["School Name", "Control", "State", "Plan", "Setting","Size", "UG_FinAid", "In-State", "OState", "Int.", "Acceptance Rate", "25/75 ACT"])
         #for each college, lookup data for it and write it into the csv
-        for college in clean_college_names[164:]:
+        for college in clean_college_names:
             holding = lookup(college)
             #if there is a response from the query
             if holding != None:
@@ -73,10 +75,48 @@ def writing_into_csv(clean_college_names):
         print("Accuracy: " + str(trouble_shooting_makes / (trouble_shooting_makes + trouble_shooting_misses)))
         print("----------------------------------------------")
 
+#function for updating the csv's with new information from the Chronicle's website
+def updating_info(clean_college_names):
+    existing_data = []
+    leftovers = []
+    #reading from the existing data and writing it to a list
+    with open('existing_data.csv') as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        line_count = 0
+        for row in csv_reader:
+            existing_data.append(row)
+    #going through the new data and checking if the school already exists in the old one
+    for college in clean_college_names:
+        is_it_in = False
+        for college_1 in existing_data:
+            #if it already exists
+            if college[0] == college_1[0]:
+                is_it_in = True
+                break
+        #if so, replace the old plan with the new one
+        if is_it_in:
+            college_1[3] = college[3]
+        #if not, stash it in this other list
+        else:
+            leftovers.append(college)
+    #make a new csv with all of the updated data
+    with open('fresh_data.csv' , 'w' , newline = '') as file:
+        writer = csv.writer(file)
+        #top row
+        writer.writerow(["School Name", "Control", "State", "Plan", "Setting","Size", "UG_FinAid", "In-State", "OState", "Int.", "Acceptance Rate", "25/75 ACT"])
+        for school in existing_data:
+            writer.writerow(school)
+    #for all of the schools that are new to the project
+    writing_into_csv(leftovers)
+
+
+
 if __name__ == "__main__":
     #grabbing names
     institution_names()
     #cleaning them
     clean_college_names = deep_clean(dirty_college_names)
     #searching them
-    writing_into_csv(clean_college_names)
+    #print(clean_college_names)
+    updating_info(clean_college_names)
+    #writing_into_csv(clean_college_names)

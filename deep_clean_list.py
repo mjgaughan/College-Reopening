@@ -35,14 +35,16 @@ def deep_clean(clean_college_names):
         clean_college = ""
         #University of Maryland system
         if U_Maryland:
-            clean_college = college[0][2:]
-            if clean_college == "University of Maryland, Eastern Shore":
+            #clean_college = college[0][2:]
+            if college[0] == "University System of Maryland — University of Maryland, Eastern Shore":
                 U_Maryland = False
                 clean_college = "University of Maryland Eastern Shore"
-            elif clean_college == "University of Maryland at College Park":
+            elif college[0] == "University System of Maryland — University of Maryland at College Park":
                 clean_college = "University of Maryland-College Park"
-            else:
+            elif college[0] == "University System of Maryland — University of Maryland, Baltimore County":
                 clean_college = "University of Maryland-Baltimore County"
+            else:
+                clean_college = college[0][32:]
             college[0] = clean_college
         #University of Texas System
         if U_T:
@@ -54,8 +56,8 @@ def deep_clean(clean_college_names):
             continue
         #University of Tennessee System
         if U_Tennessee:
-            clean_college = "University of Tennessee" + "-" + college[0][2:]
-            if college[0]== "— Martin":
+            clean_college = "University of Tennessee" + "-" + college[0][33:]
+            if college[0]== "University of Tennessee system — Martin":
                 U_Tennessee = False
             college[0] = clean_college
             #print(college[0])
